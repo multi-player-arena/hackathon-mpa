@@ -21,7 +21,8 @@ export function JoinPage() {
 
     return (
         <div>
-            <InputText value={name} onChange={(e) => setName(e.target.value)} />
+            <label htmlFor="playerName" className='takima'>Player Name</label><br/>
+            <InputText value={name} onChange={(e) => setName(e.target.value)}/>
             <button onClick={handleOnSubmit}>
                 Join
             </button>
