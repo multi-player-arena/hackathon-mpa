@@ -1,4 +1,4 @@
-import {Actions, Player} from "../Models/Player.ts";
+import {Actions, Player} from "../models/Player.ts";
 import useFetchService from "./useFetchService.ts";
 
 

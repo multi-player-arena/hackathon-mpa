@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {usePlayerService} from "../services/usePlayerService.ts";
+import { InputText } from 'primereact/inputtext';
 
 export function JoinPage() {
 
@@ -20,7 +21,7 @@ export function JoinPage() {
 
     return (
         <div>
-            <input onChange={(e) => setName(e.target.value)} value={name}/>
+            <InputText value={name} onChange={(e) => setName(e.target.value)} />
             <button onClick={handleOnSubmit}>
                 Join
             </button>
