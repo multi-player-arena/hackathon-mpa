@@ -5,6 +5,8 @@ import useFetchService from "./useFetchService.ts";
 export const usePlayerService = () => {
     const { postRequest } = useFetchService();
 
+
+
     function createPlayer(name: string): Promise<Player> {
         return postRequest<Player>(`/player/${name}`);
 
