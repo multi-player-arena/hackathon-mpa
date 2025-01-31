@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {useSubscription} from "react-stomp-hooks";
-import {Player} from "../Models/Player.ts";
+import {Player} from "../models/Player.ts";
 
 export function  PlayerListener () {
     const [message, setMessage] = useState("");
