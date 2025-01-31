@@ -1,5 +1,7 @@
 package io.mpa.player;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
