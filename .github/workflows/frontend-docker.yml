@@ -39,5 +39,5 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ghcr.io/multi-player-arena/hackathon-mpa/front:main
           labels: ${{ steps.meta.outputs.labels }}
