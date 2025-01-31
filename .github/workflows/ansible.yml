@@ -1,0 +1,30 @@
+name: ansible_deploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  run-playbooks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      #        with:
+      #          submodules: true
+      #          token: ${{secrets.REPO_TOKEN}}
+      - name: Setup SSH
+        shell: bash
+        run: |
+          eval `ssh-agent -s`
+          mkdir -p /home/runner/.ssh/
+          touch /home/runner/.ssh/id_rsa
+          echo -e "${{secrets.SSH_KEY}}" > /home/runner/.ssh/id_rsa
+          chmod 700 /home/runner/.ssh/id_rsa
+          ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ymougenel.takima.me >> /home/runner/.ssh/known_hosts
+      - name: Run ansible script
+        shell: bash
+        run: |
+          ansible-playbook --private-key /home/runner/.ssh/id_rsa ansible/deploy_playbook.yml -i "ymougenel.takima.me," -e "ansible_user=rocky"

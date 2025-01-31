@@ -1,0 +1,11 @@
+- name: Deploy application to server
+  docker_container:
+    name: "{{ item.name }}"
+    pull: yes
+    image: "{{ item.image }}:{{ item.version | default('latest') }}"
+    state: started
+    recreate: "yes"
+    ports:
+      - "{{ item.port | default('80') }}:{{ item.application_port | default('80') }}"
+  with_items:
+    - "{{ applications }}"
