@@ -21,7 +21,6 @@ public class TestSocket {
     }
 
     public void broadcastAction(@Payload Action action) {
-//        TODO Check topic name
-        messagingTemplate.convertAndSend("/topic/reply", action);
+        messagingTemplate.convertAndSend("/topic/action", action);
     }
 }
