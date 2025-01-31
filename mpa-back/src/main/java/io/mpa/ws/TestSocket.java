@@ -10,11 +10,14 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 @Controller
-@RequiredArgsConstructor
 public class TestSocket {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestSocket.class);
 
     private final SimpMessagingTemplate messagingTemplate;
+
+    public TestSocket(SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
+    }
 
     public void broadcastMessage(@Payload Player message) {
         messagingTemplate.convertAndSend("/topic/player", message);
