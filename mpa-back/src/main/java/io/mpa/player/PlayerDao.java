@@ -1,4 +1,4 @@
-package io.mpa;
+package io.mpa.player;
 
 import org.springframework.stereotype.Service;
 
@@ -7,17 +7,16 @@ import java.util.List;
 
 @Service
 public class PlayerDao {
-    private List<String> players = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
 
     public PlayerDao() {
     }
 
-    public List<String> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
-    public int addPlayer(String player) {
+    public void addPlayer(Player player) {
         players.add(player);
-        return players.size();
     }
 }
