@@ -1,21 +1,22 @@
 import {useState} from "react";
 import {usePlayerService} from "../services/usePlayerService.ts";
+import {useNavigate} from "react-router-dom";
+import {usePlayer} from "../providers/PlayerContext.tsx";
 import { InputText } from 'primereact/inputtext';
 
 export function JoinPage() {
 
     const [name, setName] = useState('')
     const {createPlayer} = usePlayerService()
+    const {setPlayer} = usePlayer();
 
+    const navigate = useNavigate();
     const handleOnSubmit = () => {
         const res = createPlayer(name);
-        res.then(() => {
-            window.location.href = '/game';
-        }).catch(
-            (error) => {
-                console.log(error);
-            }
-        );
+        res.then((player) => {
+            setPlayer(player);
+            navigate(`/controller`);
+        }).catch((error) => console.error(error));
         setName('');
     }
 
