@@ -1,12 +1,11 @@
 import './App.css'
+import {GamePage} from "./pages/GamePage.tsx";
 
 function App() {
 
   return (
     <>
-      <div>
-       MPA
-      </div>
+        <GamePage />
     </>
   )
 }
