@@ -50,3 +50,16 @@
 input {
   margin-right: 10px;
 }
+
+#join-container {
+  border: 5px solid #ee0b6f;
+  background-color: #f9f9f1;
+  padding: 20px;
+  max-width: 800px;
+  margin: 20px auto;
+  width: 100%;
+}
+
+#join {
+  background-color: #51e434;
+}

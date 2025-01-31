@@ -21,10 +21,10 @@ export function JoinPage() {
     }
 
     return (
-        <div>
-            <label htmlFor="playerName" className='takima'>Player Name</label><br/>
+        <div id="join-container">
+            <label htmlFor="playerName" className='takima'>Player Name:</label><br/>
             <InputText value={name} onChange={(e) => setName(e.target.value)}/>
-            <button onClick={handleOnSubmit}>
+            <button id='join' onClick={handleOnSubmit}>
                 Join
             </button>
         </div>
