@@ -12,6 +12,12 @@ export function ControllerPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!player) {
+            navigate("/join");
+        }
+    }, [player, navigate]);
+
+    useEffect(() => {
         const checkOrientation = () => {
             setIsPortrait(window.matchMedia("(orientation: portrait)").matches);
         };
@@ -25,11 +31,11 @@ export function ControllerPage() {
     }
 
     if (!player) {
-        navigate('/join');
         return;
     }
 
     if (isPortrait) {
+        console.log('Portrait mode');
         return (
             <div>
                 <h1>{player.name}</h1>
