@@ -1,9 +1,10 @@
 import {useState} from "react";
-import {createPlayer} from "../services/playerService.ts";
+import {usePlayerService} from "../services/usePlayerService.ts";
 
 export function JoinPage() {
 
     const [name, setName] = useState('')
+    const {createPlayer} = usePlayerService()
 
     const handleOnSubmit = () => {
         const res = createPlayer(name);

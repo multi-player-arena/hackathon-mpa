@@ -1,0 +1,21 @@
+import {Actions, Player} from "../Models/Player.ts";
+import useFetchService from "./useFetchService.ts";
+
+
+export const usePlayerService = () => {
+    const { postRequest } = useFetchService();
+
+    function createPlayer(name: string): Promise<Player> {
+        return postRequest<Player>(`/player/${name}`);
+
+    }
+    function actionPlayer(playerId: number, action: Actions):Promise<void> {
+        return postRequest<void>(`/player/${playerId}/${action}`);
+
+    }
+
+    return { createPlayer, actionPlayer };
+
+}
+
+
