@@ -1,5 +1,5 @@
 import {StompSessionProvider} from "react-stomp-hooks";
-import {ChildComponent} from "../component/ChildComponent.tsx";
+import {PlayerListener} from "../component/PlayerListener.tsx";
 import {PublishComponent} from "../component/PublishComponent.tsx";
 
 export function GamePage() {
@@ -8,7 +8,7 @@ export function GamePage() {
         <StompSessionProvider
             url={'http://localhost:8080/ws-endpoint'}>
 
-            <ChildComponent />
+            <PlayerListener />
             <PublishComponent/>
 
         </StompSessionProvider>

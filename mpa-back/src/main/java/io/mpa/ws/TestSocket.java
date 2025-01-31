@@ -17,7 +17,7 @@ public class TestSocket {
     private final SimpMessagingTemplate messagingTemplate;
 
     public void broadcastMessage(@Payload Player message) {
-        messagingTemplate.convertAndSend("/topic/reply", message);
+        messagingTemplate.convertAndSend("/topic/player", message);
     }
 
     public void broadcastAction(@Payload Action action) {

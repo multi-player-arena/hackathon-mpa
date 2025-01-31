@@ -1,12 +1,15 @@
 import {useState} from "react";
 import {useSubscription} from "react-stomp-hooks";
+import {Player} from "../Models/Player.ts";
 
-export function  ChildComponent () {
+export function  PlayerListener () {
     const [message, setMessage] = useState("");
     // Subscribe to the topic that we have opened in our spring boot app
-    useSubscription('/topic/reply', (message) => {setMessage(message.body)});
+    useSubscription('/topic/player', (message) => {setMessage(message.body)});
 
     return (
+        // Parse message to Player object
+
         <div>Message reçu: "{message}"</div>
     )
 }
