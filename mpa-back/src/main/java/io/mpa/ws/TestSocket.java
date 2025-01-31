@@ -1,5 +1,6 @@
 package io.mpa.ws;
 
+import io.mpa.action.Action;
 import io.mpa.player.Player;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -17,5 +18,10 @@ public class TestSocket {
 
     public void broadcastMessage(@Payload Player message) {
         messagingTemplate.convertAndSend("/topic/reply", message);
+    }
+
+    public void broadcastAction(@Payload Action action) {
+//        TODO Check topic name
+        messagingTemplate.convertAndSend("/topic/reply", action);
     }
 }

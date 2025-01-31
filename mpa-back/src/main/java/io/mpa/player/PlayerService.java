@@ -1,5 +1,6 @@
 package io.mpa.player;
 
+import io.mpa.action.Action;
 import io.mpa.ws.TestSocket;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,10 @@ public class PlayerService {
         playerDao.addPlayer(player);
         testSocket.broadcastMessage(player);
         return player;
+    }
+
+    public void addAction(Action action) {
+        testSocket.broadcastAction(action);
     }
 
     private Player createPlayer(String name) {
