@@ -57,10 +57,10 @@ export function ControllerPage() {
             gap: "5rem",
         }}>
             <div className="button-grid">
-                <button className="controlUp pi pi-caret-up"  onMouseLeave={() => sendStopAction()} onTouchStart={() => sendStopAction()} onTouchEnd={() => sendAction(ActionsEnum.UP)} />
-                <button className="controlLeft pi pi-caret-left" onMouseLeave={() => sendStopAction()} onTouchStart={() => sendStopAction()} onTouchEnd={() => sendAction(ActionsEnum.LEFT)}/>
-                <button className="controlRight pi pi-caret-right" onMouseLeave={() => sendStopAction()} onTouchStart={() => sendStopAction()} onTouchEnd={() => sendAction(ActionsEnum.RIGHT)}/>
-                <button className="controlDown pi pi-caret-down" onMouseLeave={() => sendStopAction()} onTouchStart={() => sendStopAction()} onTouchEnd={() => sendAction(ActionsEnum.DOWN)}/>
+                <button className="controlUp pi pi-caret-up"  onTouchEnd={() => sendStopAction()} onTouchStart={() => sendAction(ActionsEnum.UP)} />
+                <button className="controlLeft pi pi-caret-left" onTouchEnd={() => sendStopAction()} onTouchStart={() => sendAction(ActionsEnum.LEFT)}/>
+                <button className="controlRight pi pi-caret-right" onTouchEnd={() => sendStopAction()} onTouchStart={() => sendAction(ActionsEnum.RIGHT)}/>
+                <button className="controlDown pi pi-caret-down" onTouchEnd={() => sendStopAction()} onTouchStart={() => sendAction(ActionsEnum.DOWN)}/>
             </div>
             <div style={{
                 alignItems: "center",
@@ -69,8 +69,8 @@ export function ControllerPage() {
                 flexDirection: "row",
                 gap: "3rem"
             }}>
-                <button className="actionButton" onMouseLeave={() => sendStopAction()} onTouchStart={() => sendStopAction()} onTouchEnd={() => sendAction(ActionsEnum.A)}>A</button>
-                <button className="actionButton" onMouseLeave={() => sendStopAction()} onTouchStart={() => sendStopAction()} onTouchEnd={() => sendAction(ActionsEnum.B)}>B</button>
+                <button className="actionButton" onTouchEnd={() => sendStopAction()} onTouchStart={() => sendAction(ActionsEnum.A)}>A</button>
+                <button className="actionButton" onTouchEnd={() => sendStopAction()} onTouchStart={() => sendAction(ActionsEnum.B)}>B</button>
             </div>
         </div>
     )
