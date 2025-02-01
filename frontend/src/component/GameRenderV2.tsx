@@ -10,8 +10,6 @@ export function GameRenderV2() {
     // useSocketService<Player>('/topic/player', player => addPlayer(player))
 
     return <>
-        <MockButton/>
-
         <PlayerMinigameV2/>
     </>
 }
