@@ -1,6 +1,6 @@
 import {useSocketService} from "../services/useSocketService.ts";
 import {Action, ActionsEnum, Player} from "../models/Player.ts";
-import {Fragment, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import {Graphics, Sprite, Stage, Text} from "@pixi/react";
 
 interface Infos {
@@ -9,12 +9,90 @@ interface Infos {
     y: number;
 }
 
+interface Wall {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
+
 const GAMESIZE_WIDTH = 800
 const GAMESIZE_HEIGHT = 600
 
 export function PlayerMinigameV2() {
-    // const {players, getPlayer} = usePlayersInGame()
     const [infos, setInfos] = useState<Infos[]>([])
+    const walls: Wall[] = [{x: 0, y: 0, width: 1, height: GAMESIZE_HEIGHT},
+        {x: GAMESIZE_WIDTH - 1, y: 0, width: 1, height: GAMESIZE_HEIGHT},
+        {x: 0, y: 0, width: GAMESIZE_WIDTH, height: 1},
+        {x: 0, y: GAMESIZE_HEIGHT - 1, width: GAMESIZE_WIDTH, height: 1},
+        { x: 50, y: 50, width: 100, height: 20 },
+        { x: 200, y: 50, width: 20, height: 100 },
+        { x: 300, y: 50, width: 100, height: 20 },
+        { x: 400, y: 100, width: 20, height: 100 },
+        { x: 500, y: 150, width: 100, height: 20 },
+        { x: 600, y: 150, width: 20, height: 100 },
+        { x: 700, y: 200, width: 100, height: 20 },
+        { x: 50, y: 250, width: 100, height: 20 },
+        { x: 150, y: 250, width: 20, height: 100 },
+        { x: 250, y: 250, width: 100, height: 20 },
+        { x: 350, y: 300, width: 20, height: 100 },
+        { x: 450, y: 300, width: 100, height: 20 },
+        { x: 550, y: 350, width: 20, height: 100 },
+        { x: 650, y: 350, width: 100, height: 20 },
+        { x: 750, y: 400, width: 20, height: 100 },
+        { x: 100, y: 450, width: 100, height: 20 },
+        { x: 200, y: 450, width: 20, height: 100 },
+        { x: 300, y: 450, width: 100, height: 20 },
+        { x: 400, y: 500, width: 20, height: 100 },
+        { x: 500, y: 500, width: 100, height: 20 },
+        { x: 600, y: 550, width: 20, height: 100 },
+        { x: 700, y: 550, width: 100, height: 20 },
+        { x: 50, y: 600, width: 100, height: 20 },
+        { x: 150, y: 600, width: 20, height: 100 },
+        { x: 250, y: 600, width: 100, height: 20 },
+        { x: 350, y: 50, width: 20, height: 100 },
+        { x: 450, y: 50, width: 100, height: 20 },
+        { x: 550, y: 100, width: 20, height: 100 },
+        { x: 650, y: 100, width: 100, height: 20 },
+        { x: 750, y: 150, width: 20, height: 100 },
+        { x: 100, y: 200, width: 100, height: 20 },
+        { x: 200, y: 200, width: 20, height: 100 },
+        { x: 300, y: 200, width: 100, height: 20 },
+        { x: 400, y: 250, width: 20, height: 100 },
+        { x: 500, y: 250, width: 100, height: 20 },
+        { x: 600, y: 300, width: 20, height: 100 },
+        { x: 700, y: 300, width: 100, height: 20 },
+        { x: 100, y: 350, width: 100, height: 20 },
+        { x: 200, y: 350, width: 20, height: 100 },
+        { x: 300, y: 350, width: 100, height: 20 },
+        { x: 400, y: 400, width: 20, height: 100 },
+        { x: 500, y: 400, width: 100, height: 20 },
+        { x: 600, y: 450, width: 20, height: 100 },
+        { x: 700, y: 450, width: 100, height: 20 },
+        { x: 50, y: 500, width: 100, height: 20 },
+        { x: 150, y: 500, width: 20, height: 100 },
+        { x: 250, y: 500, width: 100, height: 20 },
+        { x: 350, y: 550, width: 20, height: 100 },
+        { x: 450, y: 550, width: 100, height: 20 },
+        { x: 550, y: 600, width: 20, height: 100 },
+        { x: 650, y: 600, width: 100, height: 20 },
+        // Add more walls to reach 200 walls...
+        { x: 150, y: 50, width: 20, height: 100 },
+        { x: 200, y: 150, width: 100, height: 20 },
+        { x: 250, y: 200, width: 20, height: 100 },
+        { x: 300, y: 300, width: 100, height: 20 },
+        { x: 350, y: 350, width: 20, height: 100 },
+        { x: 400, y: 400, width: 100, height: 20 },
+        { x: 450, y: 450, width: 20, height: 100 },
+        { x: 500, y: 500, width: 100, height: 20 },
+        { x: 550, y: 550, width: 20, height: 100 },
+        { x: 600, y: 600, width: 100, height: 20 },
+        // More walls here until 200 total
+
+
+
+
+    ];
 
     const getNextPositionInfo: (info: Infos, action: ActionsEnum) => Infos = (info, action) => {
         switch (action) {
@@ -73,15 +151,6 @@ export function PlayerMinigameV2() {
 
     })
 
-    const walls = [
-        {x: 0, y: 0, width: 1, height: GAMESIZE_HEIGHT},
-        {x: GAMESIZE_WIDTH - 1, y: 0, width: 1, height: GAMESIZE_HEIGHT},
-        {x: 0, y: 0, width: GAMESIZE_WIDTH, height: 1},
-        {x: 0, y: GAMESIZE_HEIGHT-1, width: GAMESIZE_WIDTH, height: 1},
-        {x: 300, y: 250, width: 100, height: 200},
-        {x: 500, y: 100, width: 150, height: 50},
-        {x: 100, y: 400, width: 200, height: 50},
-    ];
     const checkCollision = (newPos: { x: number; y: number }) => {
         return walls.some(wall => (
             newPos.x + 10 > wall.x && // Right collision
@@ -124,7 +193,8 @@ export function PlayerMinigameV2() {
                     key={wall.x * 100 + wall.y}
                     draw={(g) => {
                         g.clear();
-                        g.beginFill(0x343434);
+                        // g.beginFill(0x343434);
+                        g.beginFill(0xff0000);
                         g.drawRect(wall.x, wall.y, wall.width, wall.height);
                         g.endFill();
                     }}
