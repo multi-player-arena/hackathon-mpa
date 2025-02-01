@@ -1,7 +1,7 @@
 import {useSocketService} from "../services/useSocketService.ts";
 import {Action, ActionsEnum, Player} from "../models/Player.ts";
-import {useState} from "react";
-import {Graphics, Sprite, Stage} from "@pixi/react";
+import {Fragment, useState} from "react";
+import {Graphics, Sprite, Stage, Text} from "@pixi/react";
 
 interface Infos {
     player: Player;
@@ -72,9 +72,9 @@ export function PlayerMinigameV2() {
     })
 
     const walls = [
-        { x: 300, y: 250, width: 100, height: 200 }, // Wall 1
-        { x: 500, y: 100, width: 150, height: 50 },  // Wall 2
-        { x: 100, y: 400, width: 200, height: 50 },  // Wall 3
+        {x: 300, y: 250, width: 100, height: 200}, // Wall 1
+        {x: 500, y: 100, width: 150, height: 50},  // Wall 2
+        {x: 100, y: 400, width: 200, height: 50},  // Wall 3
     ];
     const checkCollision = (newPos: { x: number; y: number }) => {
         return walls.some(wall => (
@@ -86,18 +86,30 @@ export function PlayerMinigameV2() {
     };
 
 
-
     return (
         <Stage width={800} height={600} options={{backgroundColor: 0x1099bb}}>
             {
                 infos.map(info => {
-                    return <Sprite key={info.player.id}
-                                   image="https://pixijs.io/pixi-react/img/bunny.png"
-                                   anchor={0.5}
-                                   x={info.x}
-                                   y={info.y}
+                    return <Fragment key={info.player.id}>
+                        <Text
+                            text={info.player.name}
+                            x={info.x}
+                            y={info.y - 30}
+                            anchor={0.5} // Center the text horizontally
+                            style={{
+                                fontFamily: 'Arial',
+                                fontSize: 16,
+                                fill: 'black',
+                                align: 'center',
+                            }}
+                        />
+                        <Sprite
+                            image="https://pixijs.io/pixi-react/img/bunny.png"
+                            anchor={0.5}
+                            x={info.x}
+                            y={info.y}
 
-                    />
+                        /></Fragment>
                 })
             }
 
