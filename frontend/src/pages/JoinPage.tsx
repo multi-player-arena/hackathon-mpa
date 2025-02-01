@@ -3,6 +3,7 @@ import {usePlayerService} from "../services/usePlayerService.ts";
 import {useNavigate} from "react-router-dom";
 import {usePlayer} from "../providers/PlayerContext.tsx";
 import { InputText } from 'primereact/inputtext';
+import {ChooseAvatarComponent} from "../component/ChooseAvatarComponent.tsx";
 
 export function JoinPage() {
 
@@ -27,6 +28,7 @@ export function JoinPage() {
             <button id='join' onClick={handleOnSubmit}>
                 Join
             </button>
+            <ChooseAvatarComponent></ChooseAvatarComponent>
         </div>
     );
 
