@@ -79,3 +79,10 @@ td {
 .WALL {
   background-color: black;
 }
+
+/*Only on desktop*/
+@media (max-width: 768px), (max-height: 480px) {
+  #shortcut {
+    display: none;
+  }
+}

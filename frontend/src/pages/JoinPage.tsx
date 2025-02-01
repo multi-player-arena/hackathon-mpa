@@ -2,7 +2,7 @@ import {useState} from "react";
 import {usePlayerService} from "../services/usePlayerService.ts";
 import {useNavigate} from "react-router-dom";
 import {usePlayer} from "../providers/PlayerContext.tsx";
-import { InputText } from 'primereact/inputtext';
+import {InputText} from 'primereact/inputtext';
 import {ChooseAvatarComponent} from "../component/ChooseAvatarComponent.tsx";
 
 export function JoinPage() {
@@ -22,13 +22,18 @@ export function JoinPage() {
     }
 
     return (
-        <div id="join-container">
-            <label htmlFor="playerName" className='takima'>Player Name:</label><br/>
-            <InputText value={name} onChange={(e) => setName(e.target.value)}/>
-            <button id='join' onClick={handleOnSubmit}>
-                Join
-            </button>
-            <ChooseAvatarComponent></ChooseAvatarComponent>
+        <div>
+            {/*Only on desktop*/}
+            <button id='shortcut' href="./game"><a href={"./game"}>Go to main page</a></button>
+
+            <div id="join-container">
+                <label htmlFor="playerName" className='takima'>Player Name:</label><br/>
+                <InputText value={name} onChange={(e) => setName(e.target.value)}/>
+                <button id='join' onClick={handleOnSubmit}>
+                    Join
+                </button>
+                <ChooseAvatarComponent></ChooseAvatarComponent>
+            </div>
         </div>
     );
 
