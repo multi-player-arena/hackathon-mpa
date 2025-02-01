@@ -18,8 +18,11 @@ interface Wall {
     height: number;
 }
 
-const GAMESIZE_WIDTH = 800
+const GAMESIZE_WIDTH = 1400
 const GAMESIZE_HEIGHT = 600
+
+const BLOCK_HEIGHT = GAMESIZE_WIDTH/150
+const BLOCK_WEIGHT = GAMESIZE_WIDTH/30
 
 export function PlayerMinigameV2() {
     const [started, setStarted] = useState<boolean>(false)
