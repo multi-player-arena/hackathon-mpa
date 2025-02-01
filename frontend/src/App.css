@@ -96,6 +96,7 @@ CONTROLLER GRID
 }
 
 .actionButton {
+    user-select: none;
     font-size: 3rem;
     font-weight: bold;
     border-radius: 100%;
