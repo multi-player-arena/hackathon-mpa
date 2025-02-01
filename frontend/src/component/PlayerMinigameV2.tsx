@@ -174,7 +174,7 @@ export function PlayerMinigameV2() {
         {x: 24 * BLOCK_WIDTH, y: 18 * BLOCK_HEIGHT, width: 1 * BLOCK_WIDTH, height: BLOCK_HEIGHT}
     ];
 
-    const speed = 15
+    const speed = 12
     const getNextPositionInfo: (info: Infos, action: ActionsEnum) => Infos = (info, action) => {
 
         switch (action) {
@@ -205,7 +205,7 @@ export function PlayerMinigameV2() {
     }
 
     useSocketService<Player>('/topic/player', player => {
-        setInfos(prevState => [...prevState, {player: player, x: 50, y: 50}]);
+        setInfos(prevState => [...prevState, {player: player, x: Math.floor(Math.random() * (750 - 50 + 1)) + 50, y: 50}]);
     })
 
     useSocketService<Player>('/topic/start', () => {
@@ -259,7 +259,7 @@ export function PlayerMinigameV2() {
             ;
     };
     const checkCollision = (newPos: { x: number; y: number }, walls: Wall[]) => {
-        const size = 5
+        const size = 4
         return walls.some(wall => (
             newPos.x + size > wall.x && // Right collision
             newPos.x < wall.x + wall.width + size && // Left collision
@@ -272,7 +272,7 @@ export function PlayerMinigameV2() {
     const resetGame = () => {
         setInfos(infos => {
             return infos.map(info => ({
-                player: info.player, x: 50, y: 50
+                player: info.player, x: Math.floor(Math.random() * (750 - 50 + 1)) + 50, y: 50
             }))
         })
         setWinner(undefined)
@@ -312,7 +312,7 @@ export function PlayerMinigameV2() {
                                 style={{
                                     fontFamily: 'Arial',
                                     fontSize: 16,
-                                    fill: 'black',
+                                    fill: 'white',
                                     align: 'center',
                                 }}
                             />
@@ -363,7 +363,7 @@ export function PlayerMinigameV2() {
                                     style={{
                                         fontFamily: 'Arial',
                                         fontSize: 16,
-                                        fill: 'black',
+                                        fill: 'white',
                                         align: 'center',
                                     }}
                                 />
