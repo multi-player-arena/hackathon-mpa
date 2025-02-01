@@ -5,6 +5,7 @@
     image: "{{ item.image }}:{{ item.version | default('latest') }}"
     state: started
     recreate: "yes"
+    restart: "yes"
     ports:
       - "{{ item.port | default('80') }}:{{ item.application_port | default('80') }}"
   with_items:
