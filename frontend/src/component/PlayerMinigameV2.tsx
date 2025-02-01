@@ -3,7 +3,6 @@ import {Action, ActionsEnum, Player} from "../models/Player.ts";
 import {Fragment, useState} from "react";
 import {Graphics, Sprite, Stage, Text} from "@pixi/react";
 import {Dialog} from "primereact/dialog";
-import {Dialog} from "primereact/dialog";
 import {avatarsMapping} from "./ChooseAvatarComponent.tsx";
 
 interface Infos {
@@ -35,8 +34,6 @@ const BLOCK_WIDTH = GAMESIZE_WIDTH / 33
 export function PlayerMinigameV2() {
     const [started, setStarted] = useState<boolean>(false)
     const [infos, setInfos] = useState<Infos[]>([])
-    const [winner, setWinner] = useState<Player | undefined>(undefined)
-    const winZone: Wall = {x: 650, y: 500, width: 200, height: GAMESIZE_HEIGHT}
 
     const wallsLobby: Wall[] = [{x: 0, y: 0, width: 1, height: GAMESIZE_HEIGHT},
         {x: GAMESIZE_WIDTH - 1, y: 0, width: 1, height: GAMESIZE_HEIGHT},
