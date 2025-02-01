@@ -24,7 +24,7 @@ export function JoinPage() {
     return (
         <div>
             {/*Only on desktop*/}
-            <button id='shortcut'><a href={"./game"}>Go to main page</a></button>
+            {/*<button id='shortcut'><a href={"./game"}>Go to main page</a></button>*/}
 
             <div id="join-container">
                 <label htmlFor="playerName" className='takima'>Player Name:</label><br/>
