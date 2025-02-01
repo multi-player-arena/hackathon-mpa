@@ -8,10 +8,10 @@ import {ChooseAvatarComponent} from "../component/ChooseAvatarComponent.tsx";
 export function JoinPage() {
 
     const [name, setName] = useState('')
-    const {createPlayer} = usePlayerService()
+    const {createPlayer} = usePlayerService();
     const {player, setPlayer} = usePlayer();
     const navigate = useNavigate();
-    const [selectedAvatar, setSelectedAvatar] = useState<string>(player?.avatar || "blissey");
+    const [selectedAvatar, setSelectedAvatar] = useState<string>(player?.avatar || "absol");
 
     const handleAvatarSelect = (avatarName: string) => {
         setSelectedAvatar(avatarName);
@@ -24,7 +24,8 @@ export function JoinPage() {
     };
 
     const handleOnSubmit = () => {
-        const res = createPlayer(name,selectedAvatar);
+        const res = createPlayer(name, selectedAvatar);
+        console.log(name, selectedAvatar);
         res.then((player) => {
             setPlayer(player);
             navigate(`/controller`);

@@ -6,6 +6,9 @@ export const avatarsMapping: Record<string, string> = {
     "chansey": "avatars/chansey.png",
     "subway": "avatars/subway.png",
     "mario": "avatars/mario.png",
+    "cuphead": "avatars/cuphead.png",
+    "knight": "avatars/knight.png",
+    "cat": "avatars/cat.png",
 };
 
 interface ChooseAvatarComponentProps {
@@ -15,7 +18,12 @@ interface ChooseAvatarComponentProps {
 
 export function ChooseAvatarComponent({selectedAvatar, handleAvatarSelect}: ChooseAvatarComponentProps) {
     return (
-        <div style={{display: "flex", gap: "20px"}}>
+        <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(5, 1fr)",
+            gridTemplateRows: "repeat(2, auto)",
+            gap: "20px",
+        }}>
             {Object.entries(avatarsMapping).map(([name, path]) => (
                 <img
                     key={name}
