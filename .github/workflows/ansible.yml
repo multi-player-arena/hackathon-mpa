@@ -1,8 +1,10 @@
 name: ansible_deploy
 
 on:
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  workflow_run:
+    workflows: [ "Backend Publish Docker Image", "Frontend Publish Docker Image" ]
+    types:
+      - completed
 
 jobs:
   run-playbooks:
