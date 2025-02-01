@@ -11,9 +11,20 @@ export function JoinPage() {
     const {createPlayer} = usePlayerService()
     const {player, setPlayer} = usePlayer();
     const navigate = useNavigate();
+    const [selectedAvatar, setSelectedAvatar] = useState<string>(player?.avatar || "blissey");
+
+    const handleAvatarSelect = (avatarName: string) => {
+        setSelectedAvatar(avatarName);
+        if (player) {
+            setPlayer({
+                ...player,
+                avatar: avatarName,
+            });
+        }
+    };
 
     const handleOnSubmit = () => {
-        const res = createPlayer(name,player?.avatar || "absol");
+        const res = createPlayer(name,selectedAvatar);
         res.then((player) => {
             setPlayer(player);
             navigate(`/controller`);
@@ -32,7 +43,10 @@ export function JoinPage() {
                 <button id='join' onClick={handleOnSubmit}>
                     Join
                 </button>
-                <ChooseAvatarComponent></ChooseAvatarComponent>
+                <ChooseAvatarComponent
+                    selectedAvatar={selectedAvatar}
+                    handleAvatarSelect={handleAvatarSelect}
+                ></ChooseAvatarComponent>
             </div>
         </div>
     );

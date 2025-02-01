@@ -1,27 +1,19 @@
-import {usePlayer} from "../providers/PlayerContext.tsx";
-import {useState} from "react";
-
 export const avatarsMapping: Record<string, string> = {
-    "absol": "/avatars/absol.png",
-    "chansey": "https://github.com/multi-player-arena/hackathon-mpa/blob/main/frontend/src/assets/avatars/chansey.png?raw=true",
-    "charizard": "https://github.com/multi-player-arena/hackathon-mpa/blob/main/frontend/src/assets/avatars/charizard.png?raw=true",
+    "absol": "avatars/absol.png",
+    "charizard": "avatars/charizard.png",
+    "steve": "avatars/steve.png",
+    "king": "avatars/king.png",
+    "chansey": "avatars/chansey.png",
+    "subway": "avatars/subway.png",
+    "mario": "avatars/mario.png",
 };
 
-export function ChooseAvatarComponent() {
-    const {player, setPlayer} = usePlayer();
+interface ChooseAvatarComponentProps {
+    selectedAvatar: string;
+    handleAvatarSelect: (avatarName: string) => void;
+}
 
-    const [selectedAvatar, setSelectedAvatar] = useState<string>(player?.avatar || "blissey");
-
-    const handleAvatarSelect = (avatarName: string) => {
-        setSelectedAvatar(avatarName);
-        if (player) {
-            setPlayer({
-                ...player,
-                avatar: avatarName,
-            });
-        }
-    };
-
+export function ChooseAvatarComponent({selectedAvatar, handleAvatarSelect}: ChooseAvatarComponentProps) {
     return (
         <div style={{display: "flex", gap: "20px"}}>
             {Object.entries(avatarsMapping).map(([name, path]) => (
@@ -32,7 +24,7 @@ export function ChooseAvatarComponent() {
                     width={64}
                     style={{
                         cursor: "pointer",
-                        border: name === selectedAvatar ? "2px solid blue" : "none",
+                        border: name === selectedAvatar ? "3px solid #ee0b6f" : "none",
                         borderRadius: "8px",
                     }}
                     onClick={() => handleAvatarSelect(name)}

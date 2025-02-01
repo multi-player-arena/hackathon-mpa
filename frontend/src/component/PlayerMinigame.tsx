@@ -94,7 +94,6 @@ export function PlayerMinigame() {
         placeRandomlyPlayer(player);
     })
 
-
     return (
 
         <table>

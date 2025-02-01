@@ -208,11 +208,8 @@ export function PlayerMinigameV2() {
     }
 
     useSocketService<Player>('/topic/player', player => {
-        console.log('player', player);
-        console.log(avatarsMapping[player.avatar])
         setInfos(prevState => [...prevState, {player: player, x: 100, y: 100}]);
         setTimes(prevState => [...prevState, {player: player, timeout: undefined}]);
-
     })
 
     useSocketService<Player>('/topic/start', () => {
@@ -221,8 +218,6 @@ export function PlayerMinigameV2() {
     })
 
     useSocketService<Action>('/topic/action', action => {
-        console.log("actoi,")
-
         if (winner) {
             return
         }
@@ -347,7 +342,9 @@ export function PlayerMinigameV2() {
                                 }}
                             />
                             <Sprite
-                                image="https://pixijs.io/pixi-react/img/bunny.png"
+                                width={40}
+                                height={40}
+                                image={avatarsMapping[info.player.avatar]}
                                 anchor={0.5}
                                 x={info.x}
                                 y={info.y}
@@ -396,11 +393,12 @@ export function PlayerMinigameV2() {
                                     }}
                                 />
                                 <Sprite
+                                    width={40}
+                                    height={40}
                                     image={avatarsMapping[info.player.avatar]}
                                     anchor={0.5}
                                     x={info.x}
                                     y={info.y}
-
                                 /></Fragment>
                         })
                     }
