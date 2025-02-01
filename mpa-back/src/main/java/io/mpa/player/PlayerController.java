@@ -39,7 +39,7 @@ public class PlayerController {
     }
 
     @PostMapping("/reset")
-    public Player resetPlayers() {
-        return playerService.resetPlayers();
+    public void resetPlayers() {
+        playerService.resetPlayers();
     }
 }

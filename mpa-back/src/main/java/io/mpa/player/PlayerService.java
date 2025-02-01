@@ -28,7 +28,7 @@ public class PlayerService {
         testSocket.broadcastAction(action);
     }
 
-    public Player resetPlayers() {
+    public void resetPlayers() {
         idIncrement = 0;
         playerDao.reset();
     }
