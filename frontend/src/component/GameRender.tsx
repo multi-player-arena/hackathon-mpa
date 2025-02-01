@@ -6,12 +6,13 @@ import {useSocketService} from "../services/useSocketService.ts";
 import {Player} from "../models/Player.ts";
 
 export function GameRender() {
-    const {addPlayer} = usePlayersInGame()
+    const {players, addPlayer} = usePlayersInGame()
 
     useSocketService<Player>('/topic/player', player => addPlayer(player))
 
     return <>
         <MockButton/>
+
         <PlayerMinigame/>
         <PublishComponent/>
     </>

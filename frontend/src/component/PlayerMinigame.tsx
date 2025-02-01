@@ -1,6 +1,6 @@
 import {useSocketService} from "../services/useSocketService.ts";
-import {Action} from "../models/Player.ts";
-import {usePlayersInGame} from "../providers/PlayersInGameContext.tsx";
+import {Action, ActionsEnum, Player} from "../models/Player.ts";
+import {useState} from "react";
 
 interface Cell {
     type: 'VOID' | 'WALL' | 'PLAYER';
@@ -11,12 +11,12 @@ const grid: Cell[][] = [
     [
         {type: 'VOID'},
         {type: 'WALL'},
-        {type: 'PLAYER', playerId: 3},
+        {type: 'VOID'},
         {type: 'VOID'}
     ],
     [
         {type: 'VOID'},
-        {type: 'PLAYER', playerId: 2},
+        {type: 'VOID'},
         {type: 'WALL'},
         {type: 'VOID'}
     ],
@@ -27,7 +27,7 @@ const grid: Cell[][] = [
         {type: 'WALL'}
     ],
     [
-        {type: 'PLAYER', playerId: 1},
+        {type: 'VOID'},
         {type: 'VOID'},
         {type: 'WALL'},
         {type: 'VOID'}
@@ -36,24 +36,84 @@ const grid: Cell[][] = [
         {type: 'VOID'},
         {type: 'WALL'},
         {type: 'VOID'},
-        {type: 'VOID', playerId: 0}
+        {type: 'VOID'},
     ]
 ];
 
-export function PlayerMinigame() {
-    const {players} = usePlayersInGame()
+interface Infos {
+    player: Player;
+    positionX: number;
+    positionY: number;
+}
 
-    useSocketService<Action>('/topic/action', action => console.log(action))
+
+export function PlayerMinigame() {
+    // const {players, getPlayer} = usePlayersInGame()
+    const [infos, setInfos] = useState<Infos[]>([])
+
+
+    const getInfo: (id: number) => (Infos) = (id: number) => {
+        return infos.filter(info => info.player.id == id)[0]
+    }
+
+    useSocketService<Action>('/topic/action', action => {
+        const oldInfo = getInfo(action.playerId)
+        const newInfo = getNextInfo(oldInfo, action.actionType);
+        console.log('newInfo', newInfo)
+
+        if (isValidInfo(newInfo)) {
+            replaceInfos(oldInfo, newInfo)
+        }
+    })
+
+
+    const getNextInfo: (info: Infos, action: ActionsEnum) => Infos = (info, action) => {
+
+        console.log('getNextInfo', info)
+        switch (action) {
+            case ActionsEnum.UP:
+                return {...info, positionX: info.positionX - 1}
+            case ActionsEnum.DOWN:
+                return {...info, positionX: info.positionX + 1}
+            case ActionsEnum.LEFT:
+                return {...info, positionY: info.positionY - 1}
+            case ActionsEnum.RIGHT:
+                return {...info, positionY: info.positionY + 1}
+            case ActionsEnum.A:
+            case ActionsEnum.B:
+                return info
+        }
+    }
+
+    const isValidInfo: (info: Infos) => boolean = info => {
+        return info.positionX >= 0 && info.positionY >= 0
+            //FIXME x2
+            // && grid[info.positionX][info.positionY].type === 'VOID'
+    }
+
+    const replaceInfos: (oldInfo: Infos, newInfo: Infos) => void = (oldInfo, newInfo) => {
+        const oldCell = grid[oldInfo.positionX][oldInfo.positionY]
+        grid[oldInfo.positionX][oldInfo.positionY] = {...grid[newInfo.positionX][newInfo.positionY]}
+        grid[newInfo.positionX][newInfo.positionY] = {...oldCell}
+
+        const updatedInfos = infos.filter(info => info.player.id !== newInfo.player.id);
+
+        setInfos([...updatedInfos, newInfo]);
+    }
+
+
+    useSocketService<Player>('/topic/player', player => {
+        grid[2][2] = {type: "PLAYER", playerId: player.id}
+        setInfos(prevInfo => [...prevInfo, {player: player, positionY: 2, positionX: 2}])
+
+    })
 
 
     return (
-        grid.flatMap(row => {
-            return row.map(cell => {
-                if (cell.type === 'PLAYER') {
-                    return `P${players.filter(p => p.id === cell.playerId)[0]?.name ?? '0'}`;
-                } else {
-                    return cell.type[0];
-                }
-            }).join(' ');
-        })).map(x => <><br/>{x}</>)
+
+        <table>
+            {grid.map((row, i) => <tr key={i}>{row.map((cell, j) => <td
+                key={i * row.length + j}>{cell.type === 'PLAYER' ? cell.playerId : cell.type}</td>)}</tr>)}
+        </table>
+    )
 }

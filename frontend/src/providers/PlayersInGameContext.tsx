@@ -5,6 +5,7 @@ import {Player} from "../models/Player.ts";
 interface PlayersInGameContextType {
     players: Player[];
     addPlayer: (player: Player) => void;
+    getPlayer: (id: number) => (Player | undefined)
 }
 
 const PlayersInGameContext = createContext<PlayersInGameContextType | undefined>(undefined);
@@ -17,8 +18,12 @@ export function PlayersInGameProvider({children}: { children: ReactNode }) {
         setPlayers((prevPlayers) => [...prevPlayers, player]);
     };
 
+    const getPlayer = (id: number) => {
+        return players.filter(player => player.id === id)[0]
+    }
+
     return (
-        <PlayersInGameContext.Provider value={{players, addPlayer}}>
+        <PlayersInGameContext.Provider value={{players, addPlayer,getPlayer}}>
             {children}
         </PlayersInGameContext.Provider>
     );
