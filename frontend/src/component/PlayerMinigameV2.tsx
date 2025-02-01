@@ -179,27 +179,29 @@ export function PlayerMinigameV2() {
         { x: 24 * BLOCK_WIDTH, y: 18 * BLOCK_HEIGHT, width: 1 * BLOCK_WIDTH, height: BLOCK_HEIGHT }
     ];
 
+    const speed = 3
     const getNextPositionInfo: (info: Infos, action: ActionsEnum) => Infos = (info, action) => {
+
         switch (action) {
             case ActionsEnum.UP:
                 return {
                     ...info,
-                    y: info.y - 5
+                    y: info.y - speed
                 };
             case ActionsEnum.DOWN:
                 return {
                     ...info,
-                    y: info.y + 5
+                    y: info.y + speed
                 };
             case ActionsEnum.LEFT:
                 return {
                     ...info,
-                    x: info.x - 5
+                    x: info.x - speed
                 }
             case ActionsEnum.RIGHT:
                 return {
                     ...info,
-                    x: info.x + 5
+                    x: info.x + speed
                 }
             case ActionsEnum.A:
             case ActionsEnum.B:
@@ -261,7 +263,7 @@ export function PlayerMinigameV2() {
                 return [...updatedInfos, info]
             });
 
-        }, 250)
+        }, 100)
         setTimes([...update, {player: oldTime.player, timeout: x}])
     })
 
