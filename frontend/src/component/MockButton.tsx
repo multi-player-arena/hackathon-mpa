@@ -7,8 +7,8 @@ export function MockButton() {
     const {createPlayer, actionPlayer} = usePlayerService();
 
     const mockDate = async () => {
-        const player1 = await createPlayer("Fabio", avatarsMapping["chansey"])
-        const player2 = await createPlayer("Yann", avatarsMapping["chansey"])
+        const player1 = await createPlayer("Fabio", avatarsMapping["king"])
+        const player2 = await createPlayer("Yann", avatarsMapping["subway"])
         const player3 = await createPlayer("Gaut", avatarsMapping["charizard"])
         const player4 = await createPlayer("Bastien", avatarsMapping["absol"])
 

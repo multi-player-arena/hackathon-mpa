@@ -208,7 +208,7 @@ export function PlayerMinigameV2() {
     }
 
     useSocketService<Player>('/topic/player', player => {
-        setInfos(prevState => [...prevState, {player: player, x: 100, y: 100}]);
+        setInfos(prevState => [...prevState, {player: player, x: 50, y: 50}]);
         setTimes(prevState => [...prevState, {player: player, timeout: undefined}]);
     })
 
@@ -297,7 +297,7 @@ export function PlayerMinigameV2() {
     const resetGame = () => {
         setInfos(infos => {
             return infos.map(info => ({
-                player: info.player, x: 100, y: 100
+                player: info.player, x: 50, y: 50
             }))
         })
         setWinner(undefined)
@@ -342,8 +342,8 @@ export function PlayerMinigameV2() {
                                 }}
                             />
                             <Sprite
-                                width={40}
-                                height={40}
+                                width={35}
+                                height={35}
                                 image={avatarsMapping[info.player.avatar]}
                                 anchor={0.5}
                                 x={info.x}
@@ -393,8 +393,8 @@ export function PlayerMinigameV2() {
                                     }}
                                 />
                                 <Sprite
-                                    width={40}
-                                    height={40}
+                                    width={35}
+                                    height={35}
                                     image={avatarsMapping[info.player.avatar]}
                                     anchor={0.5}
                                     x={info.x}
