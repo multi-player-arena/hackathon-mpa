@@ -2,7 +2,7 @@ import {useSocketService} from "../services/useSocketService.ts";
 import {Action, ActionsEnum, Player} from "../models/Player.ts";
 import {useState} from "react";
 
-interface Cell {
+export interface Cell {
     type: 'VOID' | 'WALL' | 'PLAYER';
     playerId?: number;
 }
@@ -10,7 +10,8 @@ interface Cell {
 const ROWS = 7;
 const COLS = 14;
 
-const grid: Cell[][] = Array.from({ length: ROWS }, () =>
+const grid: Cell[][] =
+    Array.from({ length: ROWS }, () =>
     Array.from({ length: COLS }, () => ({
         type: Math.random() < 1 / 6 ? 'WALL' : 'VOID', // 1/6 chance d'être un mur
     }))
@@ -63,7 +64,7 @@ export function PlayerMinigame() {
 
     const isValidInfo: (info: Infos) => boolean = info => {
         return info.positionX >= 0 && info.positionY >= 0
-        && info.positionX < grid.length && info.positionY < grid[0].length
+            && info.positionX < grid.length && info.positionY < grid[0].length
             && grid[info.positionX][info.positionY].type === 'VOID'
     }
 
@@ -77,7 +78,7 @@ export function PlayerMinigame() {
         setInfos([...updatedInfos, newInfo]);
     }
 
-    const placeRandomlyPlayer : (player: Player) => void = (player) => {
+    const placeRandomlyPlayer: (player: Player) => void = (player) => {
         let i = Math.floor(Math.random() * (grid.length + 1));
         let j = Math.floor(Math.random() * (grid[0].length + 1));
         while (grid[i][j].type !== "VOID") {
@@ -93,12 +94,12 @@ export function PlayerMinigame() {
     })
 
 
-
     return (
 
         <table>
             {grid.map((row, i) => <tr key={i}>{row.map((cell, j) => <td
-                key={i * row.length + j} className={cell.type}>{cell.type === 'PLAYER' ? cell.playerId : cell.type}</td>)}</tr>)}
+                key={i * row.length + j}
+                className={cell.type}>{cell.type === 'PLAYER' ? cell.playerId : cell.type}</td>)}</tr>)}
         </table>
     )
 }
