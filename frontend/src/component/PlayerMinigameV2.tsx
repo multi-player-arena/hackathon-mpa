@@ -174,7 +174,7 @@ export function PlayerMinigameV2() {
         {x: 24 * BLOCK_WIDTH, y: 18 * BLOCK_HEIGHT, width: 1 * BLOCK_WIDTH, height: BLOCK_HEIGHT}
     ];
 
-    const speed = 7
+    const speed = 15
     const getNextPositionInfo: (info: Infos, action: ActionsEnum) => Infos = (info, action) => {
 
         switch (action) {
