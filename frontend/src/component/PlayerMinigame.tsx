@@ -7,38 +7,14 @@ interface Cell {
     playerId?: number;
 }
 
-const grid: Cell[][] = [
-    [
-        {type: 'VOID'},
-        {type: 'WALL'},
-        {type: 'VOID'},
-        {type: 'VOID'}
-    ],
-    [
-        {type: 'VOID'},
-        {type: 'VOID'},
-        {type: 'WALL'},
-        {type: 'VOID'}
-    ],
-    [
-        {type: 'WALL'},
-        {type: 'VOID'},
-        {type: 'VOID'},
-        {type: 'WALL'}
-    ],
-    [
-        {type: 'VOID'},
-        {type: 'VOID'},
-        {type: 'WALL'},
-        {type: 'VOID'}
-    ],
-    [
-        {type: 'VOID'},
-        {type: 'WALL'},
-        {type: 'VOID'},
-        {type: 'VOID'},
-    ]
-];
+const ROWS = 7;
+const COLS = 14;
+
+const grid: Cell[][] = Array.from({ length: ROWS }, () =>
+    Array.from({ length: COLS }, () => ({
+        type: Math.random() < 1 / 6 ? 'WALL' : 'VOID', // 1/6 chance d'être un mur
+    }))
+);
 
 interface Infos {
     player: Player;
@@ -87,8 +63,8 @@ export function PlayerMinigame() {
 
     const isValidInfo: (info: Infos) => boolean = info => {
         return info.positionX >= 0 && info.positionY >= 0
-            //FIXME x2
-            // && grid[info.positionX][info.positionY].type === 'VOID'
+        && info.positionX < grid.length && info.positionY < grid[0].length
+            && grid[info.positionX][info.positionY].type === 'VOID'
     }
 
     const replaceInfos: (oldInfo: Infos, newInfo: Infos) => void = (oldInfo, newInfo) => {
@@ -101,12 +77,22 @@ export function PlayerMinigame() {
         setInfos([...updatedInfos, newInfo]);
     }
 
-
+    const placeRandomlyPlayer : (player: Player) => void = (player) => {
+        let i = Math.floor(Math.random() * (grid.length + 1));
+        let j = Math.floor(Math.random() * (grid[0].length + 1));
+        while (grid[i][j].type !== "VOID") {
+            i = Math.floor(Math.random() * (grid.length + 1));
+            j = Math.floor(Math.random() * (grid[0].length + 1));
+        }
+        grid[i][j].type = "PLAYER";
+        grid[i][j].playerId = player.id;
+        setInfos(prevInfo => [...prevInfo, {player: player, positionY: j, positionX: i}])
+    }
     useSocketService<Player>('/topic/player', player => {
-        grid[2][2] = {type: "PLAYER", playerId: player.id}
-        setInfos(prevInfo => [...prevInfo, {player: player, positionY: 2, positionX: 2}])
+        placeRandomlyPlayer(player);
 
     })
+
 
 
     return (

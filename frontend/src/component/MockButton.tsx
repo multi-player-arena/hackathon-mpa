@@ -7,18 +7,18 @@ export function MockButton() {
 
     const mockDate = async () => {
         const player1 = await createPlayer("Fabio")
-        // const player2 = await createPlayer("Yann")
-        // const player3 = await createPlayer("Gaut")
-        // const player4 = await createPlayer("Bastien")
+        const player2 = await createPlayer("Yann")
+        const player3 = await createPlayer("Gaut")
+        const player4 = await createPlayer("Bastien")
 
-        const mockPlayers: Player[] = [player1]
+        const mockPlayers: Player[] = [player1, player2, player3, player4]
 
         setInterval(() => {
             const values = Object.values(ActionsEnum);
             const randomIndex = Math.floor(Math.random() * values.length);
-            const action:ActionsEnum = values[randomIndex];
-            actionPlayer(mockPlayers[Math.floor(Math.random() * mockPlayers.length)].id, ActionsEnum.RIGHT)
-        }, 5000);
+            const action: ActionsEnum = values[randomIndex];
+            actionPlayer(mockPlayers[Math.floor(Math.random() * mockPlayers.length)].id, action)
+        }, 1000);
 
     }
 
