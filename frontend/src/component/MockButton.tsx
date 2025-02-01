@@ -1,6 +1,6 @@
 import {Button} from "primereact/button";
 import {usePlayerService} from "../services/usePlayerService.ts";
-import {Actions, Player} from "../models/Player.ts";
+import {ActionsEnum, Player} from "../models/Player.ts";
 
 export function MockButton() {
     const {createPlayer, actionPlayer} = usePlayerService();
@@ -14,9 +14,9 @@ export function MockButton() {
         const mockPlayers: Player[] = [player1, player2, player3, player4]
 
         setInterval(() => {
-            const values = Object.values(Actions);
+            const values = Object.values(ActionsEnum);
             const randomIndex = Math.floor(Math.random() * values.length);
-            const action:Actions = values[randomIndex];
+            const action:ActionsEnum = values[randomIndex];
             actionPlayer(mockPlayers[Math.floor(Math.random() * mockPlayers.length)].id, action)
         }, 5000);
 

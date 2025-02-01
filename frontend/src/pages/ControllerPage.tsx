@@ -1,4 +1,4 @@
-import {Actions} from "../models/Player.ts";
+import {ActionsEnum} from "../models/Player.ts";
 import {usePlayer} from "../providers/PlayerContext.tsx";
 import {useEffect, useState} from "react";
 import {usePlayerService} from "../services/usePlayerService.ts";
@@ -26,7 +26,7 @@ export function ControllerPage() {
         return () => window.removeEventListener("resize", checkOrientation);
     }, []);
 
-    function sendAction(action: Actions) {
+    function sendAction(action: ActionsEnum) {
         actionPlayer(player!.id, action).catch((error) => console.error(error));
     }
 
@@ -48,14 +48,14 @@ export function ControllerPage() {
         <div>
             <h1>{player.name}</h1>
             <div>
-                <button onClick={() => sendAction(Actions.UP)}>▲</button>
-                <button onClick={() => sendAction(Actions.LEFT)}>◀</button>
-                <button onClick={() => sendAction(Actions.RIGHT)}>▶</button>
-                <button onClick={() => sendAction(Actions.DOWN)}>▼</button>
+                <button onClick={() => sendAction(ActionsEnum.UP)}>▲</button>
+                <button onClick={() => sendAction(ActionsEnum.LEFT)}>◀</button>
+                <button onClick={() => sendAction(ActionsEnum.RIGHT)}>▶</button>
+                <button onClick={() => sendAction(ActionsEnum.DOWN)}>▼</button>
             </div>
             <div>
-                <button onClick={() => sendAction(Actions.A)}>A</button>
-                <button onClick={() => sendAction(Actions.B)}>B</button>
+                <button onClick={() => sendAction(ActionsEnum.A)}>A</button>
+                <button onClick={() => sendAction(ActionsEnum.B)}>B</button>
             </div>
         </div>
     )

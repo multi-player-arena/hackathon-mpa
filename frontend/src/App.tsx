@@ -10,14 +10,14 @@ function App() {
     return (
         <PrimeReactProvider>
             <PlayerProvider>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Navigate replace to="/join"/>}/>
-                    <Route path="/join" element={<JoinPage/>}/>
-                    <Route path="/game" element={<GamePage/>}/>
-                    <Route path="/controller" element={<ControllerPage/>}/>
-                </Routes>
-            </BrowserRouter>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<Navigate replace to="/join"/>}/>
+                        <Route path="/join" element={<JoinPage/>}/>
+                        <Route path="/game" element={<GamePage/>}/>
+                        <Route path="/controller" element={<ControllerPage/>}/>
+                    </Routes>
+                </BrowserRouter>
             </PlayerProvider>
         </PrimeReactProvider>
     )

@@ -1,4 +1,4 @@
-import {Actions, Player} from "../models/Player.ts";
+import {ActionsEnum, Player} from "../models/Player.ts";
 import useFetchService from "./useFetchService.ts";
 
 
@@ -11,7 +11,7 @@ export const usePlayerService = () => {
         return postRequest<Player>(`/player/${name}`);
 
     }
-    function actionPlayer(playerId: number, action: Actions):Promise<void> {
+    function actionPlayer(playerId: number, action: ActionsEnum):Promise<void> {
         return postRequest<void>(`/player/${playerId}/${action}`);
 
     }
