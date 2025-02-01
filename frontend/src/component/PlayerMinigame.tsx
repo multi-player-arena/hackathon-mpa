@@ -113,7 +113,7 @@ export function PlayerMinigame() {
 
         <table>
             {grid.map((row, i) => <tr key={i}>{row.map((cell, j) => <td
-                key={i * row.length + j}>{cell.type === 'PLAYER' ? cell.playerId : cell.type}</td>)}</tr>)}
+                key={i * row.length + j} className={cell.type}>{cell.type === 'PLAYER' ? cell.playerId : cell.type}</td>)}</tr>)}
         </table>
     )
 }

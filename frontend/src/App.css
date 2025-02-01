@@ -63,3 +63,19 @@ input {
 #join {
   background-color: #51e434;
 }
+
+tr {
+  height: 64px;
+}
+
+td {
+  width: 64px;
+}
+
+.VOID {
+  background-color: #f4e9e9;
+}
+
+.WALL {
+  background-color: black;
+}
