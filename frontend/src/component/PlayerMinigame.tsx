@@ -1,22 +1,16 @@
 import {useSocketService} from "../services/useSocketService.ts";
 import {Action, ActionsEnum, Player} from "../models/Player.ts";
 import {useState} from "react";
+// import {grid} from "../models/Grid.ts";
+import {grid} from "../models/GridTest.ts";
 
 export interface Cell {
-    type: 'VOID' | 'WALL' | 'PLAYER';
+    type: 'VOID' | 'WALL' | 'PLAYER' | 'END!';
     playerId?: number;
 }
 
 const ROWS = 7;
 const COLS = 14;
-
-const grid: Cell[][] =
-    Array.from({ length: ROWS }, () =>
-    Array.from({ length: COLS }, () => ({
-        type: Math.random() < 1 / 6 ? 'WALL' : 'VOID', // 1/6 chance d'être un mur
-    }))
-);
-
 interface Infos {
     player: Player;
     positionX: number;
@@ -37,8 +31,8 @@ export function PlayerMinigame() {
         const oldInfo = getInfo(action.playerId)
         const newInfo = getNextInfo(oldInfo, action.actionType);
         console.log('newInfo', newInfo)
-
         if (isValidInfo(newInfo)) {
+            testWin(newInfo)
             replaceInfos(oldInfo, newInfo)
         }
     })
@@ -63,9 +57,16 @@ export function PlayerMinigame() {
     }
 
     const isValidInfo: (info: Infos) => boolean = info => {
+
         return info.positionX >= 0 && info.positionY >= 0
             && info.positionX < grid.length && info.positionY < grid[0].length
-            && grid[info.positionX][info.positionY].type === 'VOID'
+            && (grid[info.positionX][info.positionY].type === 'VOID' || grid[info.positionX][info.positionY].type === 'END!')
+    }
+
+    const testWin: (info: Infos) => void = info => {
+        if (grid[info.positionX][info.positionY].type === 'END!') {
+            console.log(info.player.name + "won")
+        }
     }
 
     const replaceInfos: (oldInfo: Infos, newInfo: Infos) => void = (oldInfo, newInfo) => {

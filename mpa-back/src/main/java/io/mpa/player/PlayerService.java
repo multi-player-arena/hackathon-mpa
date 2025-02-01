@@ -28,6 +28,11 @@ public class PlayerService {
         testSocket.broadcastAction(action);
     }
 
+    public Player resetPlayers() {
+        idIncrement = 0;
+        playerDao.reset();
+    }
+
     private Player createPlayer(String name) {
         return new Player(idIncrement++, name);
     }

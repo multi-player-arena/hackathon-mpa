@@ -37,4 +37,9 @@ public class PlayerController {
         LOGGER.info("Player " + playerId + " send action: " + action);
         playerService.addAction(new Action(playerId, action, Instant.now()));
     }
+
+    @PostMapping("/reset")
+    public Player resetPlayers() {
+        return playerService.resetPlayers();
+    }
 }

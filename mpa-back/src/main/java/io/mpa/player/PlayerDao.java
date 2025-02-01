@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public class PlayerDao {
-    private final List<Player> players = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
 
     public PlayerDao() {
     }
@@ -18,5 +18,9 @@ public class PlayerDao {
 
     public void addPlayer(Player player) {
         players.add(player);
+    }
+
+    public void reset() {
+        players = new ArrayList<>();
     }
 }
