@@ -27,12 +27,22 @@ export function ControllerPage() {
         return () => window.removeEventListener("resize", checkOrientation);
     }, []);
 
+    const [buttonActive, setButtonActive]=useState(false)
+
     function sendAction(action: ActionsEnum) {
+        if (buttonActive){
+            return
+        }
+        console.log('pressed');
         actionPlayer(player!.id, action).catch((error) => console.error(error));
+        setButtonActive(true)
     }
 
     function sendStopAction() {
+        console.log('stop');
         stopActionPlayer(player!.id)
+        setButtonActive(false)
+
     }
 
     if (!player) {
