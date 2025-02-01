@@ -2,6 +2,8 @@ import {useSocketService} from "../services/useSocketService.ts";
 import {Action, ActionsEnum, Player} from "../models/Player.ts";
 import {Fragment, useState} from "react";
 import {Graphics, Sprite, Stage, Text} from "@pixi/react";
+import {grid} from "../models/Grid.ts";
+import {Cell} from "./PlayerMinigame.tsx";
 import {Dialog} from "primereact/dialog";
 import {avatarsMapping} from "./ChooseAvatarComponent.tsx";
 
@@ -21,8 +23,8 @@ interface Wall {
 const GAMESIZE_WIDTH = 1400
 const GAMESIZE_HEIGHT = 600
 
-const BLOCK_HEIGHT = GAMESIZE_WIDTH/150
-const BLOCK_WEIGHT = GAMESIZE_WIDTH/30
+const BLOCK_HEIGHT = GAMESIZE_HEIGHT/30
+const BLOCK_WIDTH = GAMESIZE_WIDTH/150
 
 export function PlayerMinigameV2() {
     const [started, setStarted] = useState<boolean>(false)
