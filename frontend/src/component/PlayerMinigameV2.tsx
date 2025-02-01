@@ -9,6 +9,8 @@ interface Infos {
     y: number;
 }
 
+const GAMESIZE_WIDTH = 800
+const GAMESIZE_HEIGHT = 600
 
 export function PlayerMinigameV2() {
     // const {players, getPlayer} = usePlayersInGame()
@@ -72,9 +74,13 @@ export function PlayerMinigameV2() {
     })
 
     const walls = [
-        {x: 300, y: 250, width: 100, height: 200}, // Wall 1
-        {x: 500, y: 100, width: 150, height: 50},  // Wall 2
-        {x: 100, y: 400, width: 200, height: 50},  // Wall 3
+        {x: 0, y: 0, width: 1, height: GAMESIZE_HEIGHT},
+        {x: GAMESIZE_WIDTH - 1, y: 0, width: 1, height: GAMESIZE_HEIGHT},
+        {x: 0, y: 0, width: GAMESIZE_WIDTH, height: 1},
+        {x: 0, y: GAMESIZE_HEIGHT-1, width: GAMESIZE_WIDTH, height: 1},
+        {x: 300, y: 250, width: 100, height: 200},
+        {x: 500, y: 100, width: 150, height: 50},
+        {x: 100, y: 400, width: 200, height: 50},
     ];
     const checkCollision = (newPos: { x: number; y: number }) => {
         return walls.some(wall => (
@@ -87,7 +93,7 @@ export function PlayerMinigameV2() {
 
 
     return (
-        <Stage width={800} height={600} options={{backgroundColor: 0x1099bb}}>
+        <Stage width={GAMESIZE_WIDTH} height={GAMESIZE_HEIGHT} options={{backgroundColor: 0x1099bb}}>
             {
                 infos.map(info => {
                     return <Fragment key={info.player.id}>
@@ -118,7 +124,7 @@ export function PlayerMinigameV2() {
                     key={wall.x * 100 + wall.y}
                     draw={(g) => {
                         g.clear();
-                        g.beginFill(0xff0000); // Red color
+                        g.beginFill(0x343434);
                         g.drawRect(wall.x, wall.y, wall.width, wall.height);
                         g.endFill();
                     }}
