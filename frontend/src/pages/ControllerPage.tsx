@@ -50,6 +50,7 @@ export function ControllerPage() {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-around",
+            gap: "5rem",
         }}>
             <div className="button-grid">
                 <button className="controlUp pi pi-caret-up" onClick={() => sendAction(ActionsEnum.UP)}/>
