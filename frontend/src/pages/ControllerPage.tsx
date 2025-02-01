@@ -9,7 +9,7 @@ export function ControllerPage() {
 
     const [isPortrait, setIsPortrait] = useState(window.matchMedia("(orientation: portrait)").matches);
     const {player} = usePlayer();
-    const {actionPlayer, stopActionPlayer} = usePlayerService();
+    const {actionPlayer} = usePlayerService();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,22 +27,10 @@ export function ControllerPage() {
         return () => window.removeEventListener("resize", checkOrientation);
     }, []);
 
-    const [buttonActive, setButtonActive]=useState(false)
 
     function sendAction(action: ActionsEnum) {
-        if (buttonActive){
-            return
-        }
         console.log('pressed');
         actionPlayer(player!.id, action).catch((error) => console.error(error));
-        setButtonActive(true)
-    }
-
-    function sendStopAction() {
-        console.log('stop');
-        stopActionPlayer(player!.id)
-        setButtonActive(false)
-
     }
 
     if (!player) {
@@ -67,10 +55,10 @@ export function ControllerPage() {
             gap: "5rem",
         }}>
             <div className="button-grid">
-                <button className="controlUp pi pi-caret-up"  onTouchEnd={() => sendStopAction()} onTouchStart={() => sendAction(ActionsEnum.UP)} />
-                <button className="controlLeft pi pi-caret-left" onTouchEnd={() => sendStopAction()} onTouchStart={() => sendAction(ActionsEnum.LEFT)}/>
-                <button className="controlRight pi pi-caret-right" onTouchEnd={() => sendStopAction()} onTouchStart={() => sendAction(ActionsEnum.RIGHT)}/>
-                <button className="controlDown pi pi-caret-down" onTouchEnd={() => sendStopAction()} onTouchStart={() => sendAction(ActionsEnum.DOWN)}/>
+                <button className="controlUp pi pi-caret-up" onClick={() => sendAction(ActionsEnum.UP)}/>
+                <button className="controlLeft pi pi-caret-left" onClick={() => sendAction(ActionsEnum.LEFT)}/>
+                <button className="controlRight pi pi-caret-right" onClick={() => sendAction(ActionsEnum.RIGHT)}/>
+                <button className="controlDown pi pi-caret-down" onClick={() => sendAction(ActionsEnum.DOWN)}/>
             </div>
             <div style={{
                 alignItems: "center",
@@ -79,8 +67,10 @@ export function ControllerPage() {
                 flexDirection: "row",
                 gap: "3rem"
             }}>
-                <button className="actionButton" onTouchEnd={() => sendStopAction()} onTouchStart={() => sendAction(ActionsEnum.A)}>A</button>
-                <button className="actionButton" onTouchEnd={() => sendStopAction()} onTouchStart={() => sendAction(ActionsEnum.B)}>B</button>
+                <button className="actionButton" onClick={() => sendAction(ActionsEnum.A)}>A
+                </button>
+                <button className="actionButton" onClick={() => sendAction(ActionsEnum.B)}>B
+                </button>
             </div>
         </div>
     )
