@@ -5,6 +5,7 @@ import {JoinPage} from "./pages/JoinPage.tsx";
 import {PrimeReactProvider} from "primereact/api";
 import {ControllerPage} from "./pages/ControllerPage.tsx";
 import {PlayerProvider} from "./providers/PlayerContext.tsx";
+import {GamePageV2} from "./pages/GamePageV2.tsx";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                         <Route path="/" element={<Navigate replace to="/join"/>}/>
                         <Route path="/join" element={<JoinPage/>}/>
                         <Route path="/game" element={<GamePage/>}/>
+                        <Route path="/gamev2" element={<GamePageV2/>}/>
                         <Route path="/controller" element={<ControllerPage/>}/>
                     </Routes>
                 </BrowserRouter>

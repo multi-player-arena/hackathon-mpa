@@ -90,7 +90,6 @@ export function PlayerMinigame() {
     }
     useSocketService<Player>('/topic/player', player => {
         placeRandomlyPlayer(player);
-
     })
 
 

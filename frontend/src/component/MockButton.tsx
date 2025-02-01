@@ -18,7 +18,7 @@ export function MockButton() {
             const randomIndex = Math.floor(Math.random() * values.length);
             const action: ActionsEnum = values[randomIndex];
             actionPlayer(mockPlayers[Math.floor(Math.random() * mockPlayers.length)].id, action)
-        }, 1000);
+        }, 100);
 
     }
 

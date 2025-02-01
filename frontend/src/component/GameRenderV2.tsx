@@ -1,10 +1,10 @@
 import {MockButton} from "./MockButton.tsx";
-import {PlayerMinigame} from "./PlayerMinigame.tsx";
+import {PlayerMinigameV2} from "./PlayerMinigameV2.tsx";
 // import {usePlayersInGame} from "../providers/PlayersInGameContext.tsx";
 // import {useSocketService} from "../services/useSocketService.ts";
 // import {Player} from "../models/Player.ts";
 
-export function GameRender() {
+export function GameRenderV2() {
     // const {players, addPlayer} = usePlayersInGame()
     //
     // useSocketService<Player>('/topic/player', player => addPlayer(player))
@@ -12,6 +12,6 @@ export function GameRender() {
     return <>
         <MockButton/>
 
-        <PlayerMinigame/>
+        <PlayerMinigameV2/>
     </>
 }
