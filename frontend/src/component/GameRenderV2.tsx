@@ -9,7 +9,11 @@ export function GameRenderV2() {
     //
     // useSocketService<Player>('/topic/player', player => addPlayer(player))
 
-    return <>
+    return <div id='game-render-container'>
+        <div id='qrcode-container'>
+            <h2>🎮 You Wanna play? 🎮</h2>
+            <img src={"qr-code.png"} id='qrcode'/>
+        </div>
         <PlayerMinigameV2/>
-    </>
+    </div>
 }
