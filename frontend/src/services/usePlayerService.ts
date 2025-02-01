@@ -16,7 +16,16 @@ export const usePlayerService = () => {
 
     }
 
-    return { createPlayer, actionPlayer };
+    function startGame():Promise<void> {
+        return postRequest<void>(`/game/start`);
+    }
+
+
+    function reset():Promise<void> {
+        return postRequest<void>(`/reset`);
+    }
+
+    return { createPlayer, actionPlayer ,startGame,reset};
 
 }
 

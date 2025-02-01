@@ -21,10 +21,15 @@ const GAMESIZE_WIDTH = 800
 const GAMESIZE_HEIGHT = 600
 
 export function PlayerMinigameV2() {
+    const [started, setStarted] = useState<boolean>(false)
     const [infos, setInfos] = useState<Infos[]>([])
     const [winner, setWinner] = useState<Player | undefined>(undefined)
     const winZone: Wall = {x: 650, y: 500, width: 200, height: GAMESIZE_HEIGHT}
 
+    const wallsLobby: Wall[] = [{x: 0, y: 0, width: 1, height: GAMESIZE_HEIGHT},
+        {x: GAMESIZE_WIDTH - 1, y: 0, width: 1, height: GAMESIZE_HEIGHT},
+        {x: 0, y: 0, width: GAMESIZE_WIDTH, height: 1},
+        {x: 0, y: GAMESIZE_HEIGHT - 1, width: GAMESIZE_WIDTH, height: 1}]
 
     const walls: Wall[] = [{x: 0, y: 0, width: 1, height: GAMESIZE_HEIGHT},
         {x: GAMESIZE_WIDTH - 1, y: 0, width: 1, height: GAMESIZE_HEIGHT},
@@ -130,6 +135,11 @@ export function PlayerMinigameV2() {
 
     })
 
+    useSocketService<Player>('/topic/start', () => {
+        resetGame()
+        setStarted(true)
+    })
+
     useSocketService<Action>('/topic/action', action => {
         if (winner) {
             return
@@ -141,10 +151,19 @@ export function PlayerMinigameV2() {
         const nextPosition = getNextPositionInfo(oldInfo, action.actionType)
 
         let info: Infos;
-        if (!checkCollision(nextPosition)) {
-            info = nextPosition
+        if (started) {
+            if (!checkCollision(nextPosition,walls)) {
+                info = nextPosition
+            } else {
+                info = oldInfo
+            }
         } else {
-            info = oldInfo
+            if (!checkCollision(nextPosition,wallsLobby)) {
+                info = nextPosition
+            } else {
+                info = oldInfo
+            }
+
         }
 
         setInfos([...updatedInfos, info]);
@@ -161,7 +180,7 @@ export function PlayerMinigameV2() {
 
             ;
     };
-    const checkCollision = (newPos: { x: number; y: number }) => {
+    const checkCollision = (newPos: { x: number; y: number }, walls: Wall[]) => {
         return walls.some(wall => (
             newPos.x + 10 > wall.x && // Right collision
             newPos.x < wall.x + wall.width + 10 && // Left collision
@@ -190,7 +209,45 @@ export function PlayerMinigameV2() {
                     GG à {winner?.name}!
                 </p>
             </Dialog>
-            {winner === undefined &&
+            {!started && <Stage width={GAMESIZE_WIDTH} height={GAMESIZE_HEIGHT} options={{backgroundColor: 0x1099bb}}>
+                {wallsLobby.map((wall, i) => (
+                    <Graphics
+                        key={i}
+                        draw={(g) => {
+                            g.clear();
+                            g.beginFill(0x343434);
+                            // g.beginFill(0xff0000);
+                            g.drawRect(wall.x, wall.y, wall.width, wall.height);
+                            g.endFill();
+                        }}
+                    />
+                ))}
+                {
+                    infos.map(info => {
+                        return <Fragment key={info.player.id}>
+                            <Text
+                                text={info.player.name}
+                                x={info.x}
+                                y={info.y - 30}
+                                anchor={0.5} // Center the text horizontally
+                                style={{
+                                    fontFamily: 'Arial',
+                                    fontSize: 16,
+                                    fill: 'black',
+                                    align: 'center',
+                                }}
+                            />
+                            <Sprite
+                                image="https://pixijs.io/pixi-react/img/bunny.png"
+                                anchor={0.5}
+                                x={info.x}
+                                y={info.y}
+
+                            /></Fragment>
+                    })
+                }
+            </Stage>}
+            {winner === undefined && started &&
                 <Stage width={GAMESIZE_WIDTH} height={GAMESIZE_HEIGHT} options={{backgroundColor: 0x1099bb}}>
 
                     <Graphics
