@@ -11,9 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      #        with:
-      #          submodules: true
-      #          token: ${{secrets.REPO_TOKEN}}
       - name: Setup SSH
         shell: bash
         run: |

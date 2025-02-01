@@ -66,3 +66,21 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+#qrcode {
+  width: 280px;
+  height: 280px;
+  margin-right: 50px;
+}
+
+#game-render-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /*text-align: start;*/
+}
+
+#qrcode-container {
+  text-align: start;
+}
