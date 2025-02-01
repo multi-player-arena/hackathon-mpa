@@ -2,7 +2,7 @@ package io.mpa.ws;
 
 import io.mpa.action.Action;
 import io.mpa.player.Player;
-import lombok.RequiredArgsConstructor;
+import io.mpa.player.StopAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -25,5 +25,14 @@ public class TestSocket {
 
     public void broadcastAction(@Payload Action action) {
         messagingTemplate.convertAndSend("/topic/action", action);
+    }
+
+    public void broadcastStart() {
+        messagingTemplate.convertAndSend("/topic/start","{}");
+    }
+
+    public void stopAction(StopAction stopAction) {
+        messagingTemplate.convertAndSend("/topic/stop/action",stopAction);
+
     }
 }

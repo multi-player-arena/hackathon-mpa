@@ -2,15 +2,9 @@ package io.mpa.player;
 
 import io.mpa.action.Action;
 import io.mpa.action.ActionType;
-import io.mpa.ws.TestSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 
@@ -36,6 +30,17 @@ public class PlayerController {
     public void receiveAction(@PathVariable String playerId, @PathVariable ActionType action) {
         LOGGER.info("Player " + playerId + " send action: " + action);
         playerService.addAction(new Action(playerId, action, Instant.now()));
+    }
+
+    @PutMapping("/player/{playerId}")
+    public void stopAction(@PathVariable String playerId) {
+        LOGGER.info("Player " + playerId + " Stoped action: " );
+        playerService.stopAction(playerId);
+    }
+
+    @PostMapping("/game/start")
+    public void startGame() {
+        playerService.startGame();
     }
 
     @PostMapping("/reset")

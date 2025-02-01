@@ -23,4 +23,8 @@ public class PlayerDao {
     public void reset() {
         players = new ArrayList<>();
     }
+
+    public Player getPlayer(String playerId) {
+        return players.stream().filter(player -> playerId.equals(player.id())).findFirst().get();
+    }
 }

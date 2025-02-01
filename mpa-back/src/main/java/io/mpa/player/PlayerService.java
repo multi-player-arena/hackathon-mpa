@@ -2,8 +2,6 @@ package io.mpa.player;
 
 import io.mpa.action.Action;
 import io.mpa.ws.TestSocket;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,5 +33,14 @@ public class PlayerService {
 
     private Player createPlayer(String name, String avatar) {
         return new Player(idIncrement++, name, avatar);
+    }
+
+    public void startGame() {
+        testSocket.broadcastStart();
+    }
+
+    public void stopAction(String playerId) {
+        testSocket.stopAction(new StopAction(playerId));
+
     }
 }
