@@ -9,7 +9,7 @@ export function ControllerPage() {
 
     const [isPortrait, setIsPortrait] = useState(window.matchMedia("(orientation: portrait)").matches);
     const {player} = usePlayer();
-    const {actionPlayer} = usePlayerService();
+    const {actionPlayer, stopActionPlayer} = usePlayerService();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -29,6 +29,10 @@ export function ControllerPage() {
 
     function sendAction(action: ActionsEnum) {
         actionPlayer(player!.id, action).catch((error) => console.error(error));
+    }
+
+    function sendStopAction() {
+        stopActionPlayer(player!.id)
     }
 
     if (!player) {
@@ -53,10 +57,10 @@ export function ControllerPage() {
             gap: "5rem",
         }}>
             <div className="button-grid">
-                <button className="controlUp pi pi-caret-up" onClick={() => sendAction(ActionsEnum.UP)}/>
-                <button className="controlLeft pi pi-caret-left" onClick={() => sendAction(ActionsEnum.LEFT)}/>
-                <button className="controlRight pi pi-caret-right" onClick={() => sendAction(ActionsEnum.RIGHT)}/>
-                <button className="controlDown pi pi-caret-down" onClick={() => sendAction(ActionsEnum.DOWN)}/>
+                <button className="controlUp pi pi-caret-up"  onMouseLeave={() => sendStopAction()} onMouseUp={() => sendStopAction()} onMouseDown={() => sendAction(ActionsEnum.UP)}/>
+                <button className="controlLeft pi pi-caret-left" onMouseLeave={() => sendStopAction()} onMouseUp={() => sendStopAction()} onMouseDown={() => sendAction(ActionsEnum.LEFT)}/>
+                <button className="controlRight pi pi-caret-right" onMouseLeave={() => sendStopAction()} onMouseUp={() => sendStopAction()} onMouseDown={() => sendAction(ActionsEnum.RIGHT)}/>
+                <button className="controlDown pi pi-caret-down" onMouseLeave={() => sendStopAction()} onMouseUp={() => sendStopAction()} onMouseDown={() => sendAction(ActionsEnum.DOWN)}/>
             </div>
             <div style={{
                 alignItems: "center",
@@ -65,8 +69,8 @@ export function ControllerPage() {
                 flexDirection: "row",
                 gap: "3rem"
             }}>
-                <button className="actionButton" onClick={() => sendAction(ActionsEnum.A)}>A</button>
-                <button className="actionButton" onClick={() => sendAction(ActionsEnum.B)}>B</button>
+                <button className="actionButton" onMouseLeave={() => sendStopAction()} onMouseUp={() => sendStopAction()} onMouseDown={() => sendAction(ActionsEnum.A)}>A</button>
+                <button className="actionButton" onMouseLeave={() => sendStopAction()} onMouseUp={() => sendStopAction()} onMouseDown={() => sendAction(ActionsEnum.B)}>B</button>
             </div>
         </div>
     )

@@ -1,9 +1,9 @@
-import {ActionsEnum, Player} from "../models/Player.ts";
+import {ActionsEnum, Player, TypeEnum} from "../models/Player.ts";
 import useFetchService from "./useFetchService.ts";
 
 
 export const usePlayerService = () => {
-    const { postRequest } = useFetchService();
+    const { postRequest,putRequest } = useFetchService();
 
 
 
@@ -16,16 +16,18 @@ export const usePlayerService = () => {
 
     }
 
+    function stopActionPlayer(playerId: number):Promise<void> {
+        return putRequest<void>(`/player/${playerId}`);
+
+    }
+
     function startGame():Promise<void> {
         return postRequest<void>(`/game/start`);
     }
 
 
-    function reset():Promise<void> {
-        return postRequest<void>(`/reset`);
-    }
 
-    return { createPlayer, actionPlayer ,startGame,reset};
+    return { createPlayer, actionPlayer ,startGame,stopActionPlayer};
 
 }
 

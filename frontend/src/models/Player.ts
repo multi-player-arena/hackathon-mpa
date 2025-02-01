@@ -3,6 +3,11 @@ export interface Player {
     name: string;
     avatar: string;
 }
+export interface StopAction {
+    playerId: number;
+}
+
+
 export enum ActionsEnum {
     UP ='UP',
     DOWN = 'DOWN',

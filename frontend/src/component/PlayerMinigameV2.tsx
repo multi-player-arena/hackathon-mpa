@@ -1,5 +1,5 @@
 import {useSocketService} from "../services/useSocketService.ts";
-import {Action, ActionsEnum, Player} from "../models/Player.ts";
+import {Action, ActionsEnum, Player, StopAction} from "../models/Player.ts";
 import {Fragment, useState} from "react";
 import {Graphics, Sprite, Stage, Text} from "@pixi/react";
 import {Dialog} from "primereact/dialog";
@@ -9,6 +9,11 @@ interface Infos {
     player: Player;
     x: number;
     y: number;
+}
+
+interface Times {
+    player: Player;
+    timeout?: NodeJS.Timeout
 }
 
 interface Wall {
@@ -33,6 +38,7 @@ const BLOCK_WIDTH = GAMESIZE_WIDTH / 33
 
 export function PlayerMinigameV2() {
     const [started, setStarted] = useState<boolean>(false)
+    const [times, setTimes] = useState<Times[]>([])
     const [infos, setInfos] = useState<Infos[]>([])
 
     const wallsLobby: Wall[] = [{x: 0, y: 0, width: 1, height: GAMESIZE_HEIGHT},
@@ -178,22 +184,22 @@ export function PlayerMinigameV2() {
             case ActionsEnum.UP:
                 return {
                     ...info,
-                    y: info.y - 10
+                    y: info.y - 5
                 };
             case ActionsEnum.DOWN:
                 return {
                     ...info,
-                    y: info.y + 10
+                    y: info.y + 5
                 };
             case ActionsEnum.LEFT:
                 return {
                     ...info,
-                    x: info.x - 10
+                    x: info.x - 5
                 }
             case ActionsEnum.RIGHT:
                 return {
                     ...info,
-                    x: info.x + 10
+                    x: info.x + 5
                 }
             case ActionsEnum.A:
             case ActionsEnum.B:
@@ -205,6 +211,7 @@ export function PlayerMinigameV2() {
         console.log('player', player);
         console.log(avatarsMapping[player.avatar])
         setInfos(prevState => [...prevState, {player: player, x: 100, y: 100}]);
+        setTimes(prevState => [...prevState, {player: player, timeout: undefined}]);
 
     })
 
@@ -214,37 +221,66 @@ export function PlayerMinigameV2() {
     })
 
     useSocketService<Action>('/topic/action', action => {
+        console.log("actoi,")
+
         if (winner) {
             return
         }
-        const updatedInfos = infos.filter(info => info.player.id != action.playerId);
+        console.log('action',action)
 
-        const oldInfo = infos.filter(info => info.player.id == action.playerId)[0]
+        const update = times.filter(info => info.player.id != action.playerId)
+        console.log('update',update)
+        const oldTime = times.filter(info => info.player.id == action.playerId)[0]
+        console.log('oldTime',oldTime)
 
-        const nextPosition = getNextPositionInfo(oldInfo, action.actionType)
-
-        let info: Infos;
-        if (started) {
-            if (!checkCollision(nextPosition,walls)) {
-                info = nextPosition
-            } else {
-                info = oldInfo
-            }
-        } else {
-            if (!checkCollision(nextPosition,wallsLobby)) {
-                info = nextPosition
-            } else {
-                info = oldInfo
-            }
-
+        if (oldTime.timeout != undefined){
+            return;
         }
+        const x: NodeJS.Timeout = setInterval(() => {
+            setInfos(prev => {
+                const updatedInfos = prev.filter(info => info.player.id != action.playerId);
 
-        setInfos([...updatedInfos, info]);
-        if (checkWin(info)) {
-            setWinner(info.player)
-        }
+                const oldInfo = prev.filter(info => info.player.id == action.playerId)[0]
 
+                const nextPosition = getNextPositionInfo(oldInfo, action.actionType)
+
+                let info: Infos;
+                if (started) {
+                    if (!checkCollision(nextPosition, walls)) {
+                        info = nextPosition
+                    } else {
+                        info = oldInfo
+                    }
+                } else {
+                    if (!checkCollision(nextPosition, wallsLobby)) {
+                        info = nextPosition
+                    } else {
+                        info = oldInfo
+                    }
+                }
+
+                if (checkWin(info)) {
+                    setWinner(info.player)
+                }
+
+                return [...updatedInfos, info]
+            });
+
+        }, 250)
+        setTimes([...update, {player: oldTime.player, timeout: x}])
     })
+
+    useSocketService<StopAction>('/topic/stop/action', action => {
+
+        const update = times.filter(info => info.player.id != action.playerId)
+        const oldTime = times.filter(info => info.player.id == action.playerId)[0]
+        if (oldTime.timeout){
+            clearTimeout(oldTime.timeout)
+        }
+        setTimes([...update, {player: oldTime.player, timeout: undefined}])
+    })
+
+
     const checkWin = (newPos: { x: number; y: number }) => {
         return newPos.x + 10 > winZone.x && // Right collision
             newPos.x < winZone.x + winZone.width + 10 && // Left collision

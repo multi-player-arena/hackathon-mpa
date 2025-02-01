@@ -26,7 +26,7 @@ export default function useFetchService() {
         return response.body;
     }
 
-    async function putRequest<T>(path: string, body: any): Promise<T> {
+    async function putRequest<T>(path: string, body?: any): Promise<T> {
         const response = await superagent
             .put(`${apiBaseUrl}${path}`)
             .send(body)
