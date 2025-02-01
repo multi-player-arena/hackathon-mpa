@@ -3,6 +3,7 @@ import {Action, ActionsEnum, Player} from "../models/Player.ts";
 import {Fragment, useState} from "react";
 import {Graphics, Sprite, Stage, Text} from "@pixi/react";
 import {Dialog} from "primereact/dialog";
+import {avatarsMapping} from "./ChooseAvatarComponent.tsx";
 
 interface Infos {
     player: Player;
@@ -131,6 +132,8 @@ export function PlayerMinigameV2() {
     }
 
     useSocketService<Player>('/topic/player', player => {
+        console.log('player', player);
+        console.log(avatarsMapping[player.avatar])
         setInfos(prevState => [...prevState, {player: player, x: 100, y: 100}]);
 
     })
@@ -287,7 +290,7 @@ export function PlayerMinigameV2() {
                                     }}
                                 />
                                 <Sprite
-                                    image="https://pixijs.io/pixi-react/img/bunny.png"
+                                    image={avatarsMapping[info.player.avatar]}
                                     anchor={0.5}
                                     x={info.x}
                                     y={info.y}

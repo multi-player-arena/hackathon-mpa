@@ -27,9 +27,9 @@ public class PlayerController {
         this.playerService = playerService;
     }
 
-    @PostMapping("/player/{playerName}")
-    public Player addPlayer(@PathVariable String playerName) {
-        return playerService.addPlayer(playerName);
+    @PostMapping("/player/{playerName}/avatar/{avatarName}")
+    public Player addPlayer(@PathVariable String playerName, @PathVariable String avatarName) {
+        return playerService.addPlayer(playerName, avatarName);
     }
 
     @PostMapping("/player/{playerId}/{action}")

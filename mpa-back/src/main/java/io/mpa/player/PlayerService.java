@@ -17,8 +17,8 @@ public class PlayerService {
         this.testSocket = testSocket;
     }
 
-    public Player addPlayer(String name) {
-        Player player = createPlayer(name);
+    public Player addPlayer(String name, String avatar) {
+        Player player = createPlayer(name, avatar);
         playerDao.addPlayer(player);
         testSocket.broadcastMessage(player);
         return player;
@@ -33,7 +33,7 @@ public class PlayerService {
         playerDao.reset();
     }
 
-    private Player createPlayer(String name) {
-        return new Player(idIncrement++, name);
+    private Player createPlayer(String name, String avatar) {
+        return new Player(idIncrement++, name, avatar);
     }
 }

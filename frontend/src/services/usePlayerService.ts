@@ -7,10 +7,10 @@ export const usePlayerService = () => {
 
 
 
-    function createPlayer(name: string): Promise<Player> {
-        return postRequest<Player>(`/player/${name}`);
-
+    function createPlayer(name: string, avatar: string): Promise<Player> {
+        return postRequest<Player>(`/player/${name}/avatar/${avatar}`);
     }
+
     function actionPlayer(playerId: number, action: ActionsEnum):Promise<void> {
         return postRequest<void>(`/player/${playerId}/${action}`);
 

@@ -1,15 +1,16 @@
 import {Button} from "primereact/button";
 import {usePlayerService} from "../services/usePlayerService.ts";
 import {ActionsEnum, Player} from "../models/Player.ts";
+import {avatarsMapping} from "./ChooseAvatarComponent.tsx";
 
 export function MockButton() {
     const {createPlayer, actionPlayer} = usePlayerService();
 
     const mockDate = async () => {
-        const player1 = await createPlayer("Fabio")
-        const player2 = await createPlayer("Yann")
-        const player3 = await createPlayer("Gaut")
-        const player4 = await createPlayer("Bastien")
+        const player1 = await createPlayer("Fabio", avatarsMapping["chansey"])
+        const player2 = await createPlayer("Yann", avatarsMapping["chansey"])
+        const player3 = await createPlayer("Gaut", avatarsMapping["charizard"])
+        const player4 = await createPlayer("Bastien", avatarsMapping["absol"])
 
         const mockPlayers: Player[] = [player1, player2, player3, player4]
 

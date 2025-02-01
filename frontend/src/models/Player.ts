@@ -1,6 +1,7 @@
 export interface Player {
     id: number;
     name: string;
+    avatar: string;
 }
 export enum ActionsEnum {
     UP ='UP',

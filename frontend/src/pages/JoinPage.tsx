@@ -9,11 +9,11 @@ export function JoinPage() {
 
     const [name, setName] = useState('')
     const {createPlayer} = usePlayerService()
-    const {setPlayer} = usePlayer();
-
+    const {player, setPlayer} = usePlayer();
     const navigate = useNavigate();
+
     const handleOnSubmit = () => {
-        const res = createPlayer(name);
+        const res = createPlayer(name,player?.avatar || "absol");
         res.then((player) => {
             setPlayer(player);
             navigate(`/controller`);
