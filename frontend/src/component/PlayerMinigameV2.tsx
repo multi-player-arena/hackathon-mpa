@@ -259,11 +259,12 @@ export function PlayerMinigameV2() {
             ;
     };
     const checkCollision = (newPos: { x: number; y: number }, walls: Wall[]) => {
+        const size = 5
         return walls.some(wall => (
-            newPos.x + 10 > wall.x && // Right collision
-            newPos.x < wall.x + wall.width + 10 && // Left collision
-            newPos.y + 15 > wall.y && // Bottom collision
-            newPos.y < wall.y + wall.height + 15 // Top collision
+            newPos.x + size > wall.x && // Right collision
+            newPos.x < wall.x + wall.width + size && // Left collision
+            newPos.y + size > wall.y && // Bottom collision
+            newPos.y < wall.y + wall.height + size // Top collision
         ));
     };
 
